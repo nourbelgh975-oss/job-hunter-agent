@@ -221,11 +221,6 @@ def vercel_cron_endpoint():
     }
 
 # Mount static files for the SPA frontend
-# Ensure that the public folder exists
-public_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "public")
-if os.path.exists(public_path):
-    app.mount("/", StaticFiles(directory=public_path, html=True), name="public")
-else:
-    @app.get("/")
-    def read_index():
-        return {"message": "Frontend assets not found. Place your index.html in the public folder."}
+frontend_path = os.path.dirname(os.path.abspath(__file__))
+
+app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
