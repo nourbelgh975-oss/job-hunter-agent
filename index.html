@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Hunter Agent for Nour</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glass-bg-decor decor-1"></div>
+    <div class="glass-bg-decor decor-2"></div>
+    <div class="glass-bg-decor decor-3"></div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-compass-drafting"></i>
+                </div>
+                <h2>Job Hunter</h2>
+                <span class="badge-nour">Nour</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-btn" data-tab="jobs">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Job Matches</span>
+                    <span class="nav-badge" id="job-count-badge">0</span>
+                </button>
+                <button class="nav-btn" data-tab="cv-helper">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <span>CV Suggestions</span>
+                </button>
+                <button class="nav-btn" data-tab="settings">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Agent Settings</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="scan-now-btn" id="trigger-scan-btn">
+                    <i class="fa-solid fa-rotate"></i>
+                    <span>Scan Jobs Now</span>
+                </button>
+                <div class="scan-status" id="scan-status-text">Ready to hunt</div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Tab -->
+            <section id="tab-dashboard" class="tab-content active">
+                <header class="content-header">
+                    <div>
+                        <h1>Welcome Back, Nour</h1>
+                        <p class="subtitle">Your job hunting agent is actively scouring the web 4 times a day.</p>
+                    </div>
+                    <div class="header-actions">
+                        <span class="last-scan-badge"><i class="fa-solid fa-clock"></i> Last updated: <span id="last-scan-time">Never</span></span>
+                    </div>
+                </header>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                        <div class="stat-info">
+                            <h3>Scanned Positions</h3>
+                            <p class="stat-val" id="stat-scanned">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card highlight">
+                        <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
+                        <div class="stat-info">
+                            <h3>High Matches (Grade 8+)</h3>
+                            <p class="stat-val" id="stat-high-matches">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-paper-plane"></i></div>
+                        <div class="stat-info">
+                            <h3>Applications Sent</h3>
+                            <p class="stat-val" id="stat-applied">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-panels">
+                    <div class="dashboard-panel main-panel">
+                        <div class="panel-header">
+                            <h2>Top Match Recommendations</h2>
+                            <button class="text-link-btn" id="see-all-jobs">View All Matches <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                        <div class="panel-body">
+                            <div class="job-list-compact" id="top-matches-list">
+                                <div class="empty-state">
+                                    <i class="fa-solid fa-network-wired"></i>
+                                    <p>No jobs scraped yet. Click "Scan Jobs Now" to start searching!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-panel sidebar-panel">
+                        <div class="panel-header">
+                            <h2>Agent Status & Criteria</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="criteria-summary">
+                                <div class="criteria-item">
+                                    <span class="label">Target Keywords</span>
+                                    <div class="tags" id="summary-keywords">
+                                        <span class="tag">Developer</span>
+                                    </div>
+                                </div>
+                                <div class="criteria-item">
+                                    <span class="label">Locations</span>
+                                    <div class="tags" id="summary-locations">
+                                        <span class="tag">Paris</span>
+                                    </div>
+                                </div>
+                                <div class="criteria-item">
+                                    <span class="label">Monitored Platforms</span>
+                                    <div class="tags green" id="summary-sites">
+                                        <span class="tag">APEC</span>
+                                        <span class="tag">Welcome to the Jungle</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="schedule-card">
+                                <div class="schedule-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                                <div>
+                                    <h4>Automatic Cron Schedule</h4>
+                                    <p>4 times per day (every 6 hours) on Vercel</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Job Matches Tab -->
+            <section id="tab-jobs" class="tab-content">
+                <header class="content-header">
+                    <div>
+                        <h1>Job Matches</h1>
+                        <p class="subtitle">Scraped and graded based on compatibility with Nour's CV.</p>
+                    </div>
+                    <div class="filter-bar">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="Matched">Unreviewed</button>
+                        <button class="filter-btn" data-filter="Applied">Applied</button>
+                        <button class="filter-btn" data-filter="Skipped">Skipped</button>
+                    </div>
+                </header>
+
+                <div class="job-grid-layout" id="all-jobs-grid">
+                    <!-- Dynamic rendering -->
+                </div>
+            </section>
+
+            <!-- CV Suggestions Helper Tab -->
+            <section id="tab-cv-helper" class="tab-content">
+                <header class="content-header">
+                    <div>
+                        <h1>CV Tailoring Suggestions</h1>
+                        <p class="subtitle">Select a high-match job to review recommended tweaks for your CV.</p>
+                    </div>
+                </header>
+                
+                <div class="cv-helper-layout">
+                    <div class="cv-jobs-list" id="cv-jobs-list-container">
+                        <!-- Left pane: job match selectors -->
+                    </div>
+                    
+                    <div class="cv-suggestions-detail" id="cv-suggestions-detail-pane">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-lightbulb"></i>
+                            <p>Select a job from the list to see personalized CV improvement tips.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Tab -->
+            <section id="tab-settings" class="tab-content">
+                <header class="content-header">
+                    <div>
+                        <h1>Agent Configuration</h1>
+                        <p class="subtitle">Adjust your CV, target criteria, SMTP credentials, and LLM providers.</p>
+                    </div>
+                </header>
+
+                <form id="settings-form" class="settings-grid">
+                    <!-- Profile and CV -->
+                    <div class="settings-card col-span-2">
+                        <div class="card-header">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <h2>Nour's Curriculum Vitae (CV)</h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="field-desc">Paste your raw CV details (experience, stack, qualifications). The agent uses this text to compare with descriptions and grade match levels.</p>
+                            <textarea id="settings-cv-text" rows="10" placeholder="Paste your CV text here..." required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Search Target Criteria -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-bullseye"></i>
+                            <h2>Target Criteria</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <label for="settings-keywords">Job Keywords (comma-separated)</label>
+                                <input type="text" id="settings-keywords" placeholder="e.g. Developer, Data Engineer, Python" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="settings-locations">Locations (comma-separated)</label>
+                                <input type="text" id="settings-locations" placeholder="e.g. Paris, Remote, Lyon" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Target Platforms</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" name="sites" value="Welcome to the Jungle" checked>
+                                        <span class="checkmark"></span> Welcome to the Jungle
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" name="sites" value="APEC" checked>
+                                        <span class="checkmark"></span> APEC
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" name="sites" value="LinkedIn" checked>
+                                        <span class="checkmark"></span> LinkedIn
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" name="sites" value="Indeed" checked>
+                                        <span class="checkmark"></span> Indeed
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" name="sites" value="Glassdoor" checked>
+                                        <span class="checkmark"></span> Glassdoor
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Integrations and Keys -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-key"></i>
+                            <h2>Integrations & API Keys</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <label for="settings-provider">AI Provider</label>
+                                <select id="settings-provider">
+                                    <option value="gemini">Google Gemini AI (Recommended)</option>
+                                    <option value="openai">OpenAI GPT</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="settings-api-key">LLM API Key</label>
+                                <input type="password" id="settings-api-key" placeholder="Enter API Key">
+                                <span class="input-tip">Leave blank to use smart heuristic keyword matcher fallback.</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="settings-gmail-user">Gmail Address</label>
+                                <input type="email" id="settings-gmail-user" placeholder="e.g. nour@gmail.com">
+                            </div>
+                            <div class="input-group">
+                                <label for="settings-gmail-password">Gmail App Password</label>
+                                <input type="password" id="settings-gmail-password" placeholder="16-character code">
+                                <span class="input-tip">Must be a Google App Password (not your main password).</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-actions col-span-2">
+                        <button type="submit" class="save-settings-btn" id="save-settings-btn">
+                            <i class="fa-solid fa-check"></i>
+                            <span>Save Configuration</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <!-- Job Detail Slide-Over Overlay -->
+    <div class="slideover-backdrop" id="job-detail-slideover">
+        <div class="slideover-container">
+            <button class="close-slideover-btn" id="close-slideover-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="slideover-content" id="slideover-content-container">
+                <!-- Dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Modal -->
+    <div class="modal-backdrop" id="apply-email-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Send Application via Gmail</h2>
+                <button class="close-modal-btn" id="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="apply-email-form" class="modal-body">
+                <div class="input-group">
+                    <label for="apply-recipient">Recipient Email (Hiring Manager / HR)</label>
+                    <input type="email" id="apply-recipient" placeholder="recruteur@entreprise.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="apply-subject">Email Subject</label>
+                    <input type="text" id="apply-subject" value="Candidature - Nour" required>
+                </div>
+                <div class="input-group">
+                    <label for="apply-body">Cover Letter (Tailored Letter)</label>
+                    <textarea id="apply-body" rows="12" required></textarea>
+                </div>
+                <div class="cv-attached-notice">
+                    <i class="fa-solid fa-paperclip"></i>
+                    <span>Your CV (<code>Nour_CV.txt</code>) will be automatically attached to this email.</span>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancel-apply-btn">Cancel</button>
+                    <button type="submit" class="btn-send" id="send-apply-btn">
+                        <i class="fa-solid fa-paper-plane"></i> Send via Gmail
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+    
+    <!-- Link Frontend Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
