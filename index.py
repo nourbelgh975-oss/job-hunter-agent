@@ -7,10 +7,10 @@ from typing import List, Optional
 import json
 
 # Import backend modules
-from api import database
-from api import scraper
-from api import grader
-from api import mailer
+import database
+import scraper
+import grader
+import mailer
 
 app = FastAPI(title="Job Hunter Agent API")
 
