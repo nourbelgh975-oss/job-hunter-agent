@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 # Path for local SQLite DB
-SQLITE_DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "jobs.db")
+SQLITE_DB_PATH = "/tmp/jobs.db"
 
 def get_connection():
     """
